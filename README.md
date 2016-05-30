@@ -1,3 +1,10 @@
+# 사용
+
+1. `git clone https://github.com/g6ling/componentTest.git`
+2. `npm install`
+3. `react-native run-ios`
+4. `git checkout -b 형이원하는이름`
+
 
 # Todo
 - [ ] 수업 클릭 후 수업 상세 페이지

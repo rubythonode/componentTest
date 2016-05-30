@@ -6,8 +6,16 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
+    "apsl-react-native-button": "^2.5.0",
     "react": "^15.0.2",
     "react-native": "^0.26.2",
-    "react-native-vector-icons": "^2.0.3"
+    "react-native-dropdown": "git+https://github.com/g6ling/react-native-dropdown.git",
+    "react-native-html-parser": "0.0.3",
+    "react-native-md-textinput": "^2.0.4",
+    "react-native-picker": "^3.0.4",
+    "react-native-router-flux": "^3.26.5",
+    "react-native-simple-store": "^1.0.1",
+    "react-native-vector-icons": "^2.0.3",
+    "react-native-webview-bridge": "git+https://github.com/wasabia/react-native-webview-bridge.git"
   }
 }

@@ -21,6 +21,17 @@ class TimeTable extends Component {
             }
         }
     }
+    componentWillMount() {
+      store.get('setting')
+        .then((setting) => {
+          console.log(setting)
+          this.setState({
+            daySetting: setting.timeTableDaySetting,
+            timeSetting: setting.timeTableTimeSetting,
+          })
+        })
+    }
+
     componentDidMount() {
         store.get('user')
           .then((user)=> {
@@ -35,7 +46,10 @@ class TimeTable extends Component {
 
     render() {
         var timeTableData = this.state.student.timeTable
-        if(timeTableData != 'None'){
+        if(timeTableData != 'None' && this.state.daySetting && this.state.timeSetting){
+          console.log(this.state.daySetting)
+          var daySetting = this.state.daySetting
+          var timeSetting = this.state.timeSetting
             return(
                 <View style={styles.container}>
                     <View style={{height: 64}}>
@@ -43,10 +57,13 @@ class TimeTable extends Component {
                     <View style={styles.timeTableContainer}>
                         {
                             timeTableData.map(function(timeTableDay, indexWeek){
+                              if(indexWeek < daySetting) {
                                 return <TimeTableDay
                                   timeTableDayData={timeTableDay}
                                   style={styles.timeTableDay}
+                                  timeSetting={timeSetting}
                                   key={indexWeek}></TimeTableDay>
+                              }
                             })
                         }
                     </View>
@@ -72,16 +89,19 @@ class TimeTableDay extends Component {
     }
     render() {
         var timeTableDay = this.props.timeTableDayData
+        var timeSetting = this.props.timeSetting
         return (
             <View style={{flexDirection: 'column', flex: 1}}>
                 <View style={styles.timeTableContainerColumn}>
                     {
                         timeTableDay.map(function(timeTableLecture, indexLecture){
+                          if(timeSetting > indexLecture){
                             if(timeTableLecture.lectureName == 'None'){
                                 return <TimeNoneCell key={indexLecture}></TimeNoneCell>
                             }else {
                                 return <TimeTableCellLecture lecture={timeTableLecture} key={indexLecture}></TimeTableCellLecture>
                             }
+                          }
                         })
                     }
                 </View>

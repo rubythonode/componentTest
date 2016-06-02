@@ -41,6 +41,9 @@ export default class PageOne extends Component {
         <Button onPress={Actions.timeTableSetting} style={styles.buttonWhite} textStyle={styles.buttonWhiteText}>
           timeTableSetting
         </Button>
+        <Button onPress={Actions.userMore} style={styles.button} textStyle={styles.buttonText}>
+          userMore
+        </Button>
       </View>
     )
   }

@@ -19,12 +19,11 @@ import TimeTable from './component/timeTable'
 import ScheduleCalendar from './component/scheduleCalendar'
 
 import TimeTableSetting from './component/timeTableSetting'
+import UserMore from './component/userMore'
 
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Entypo from 'react-native-vector-icons/Entypo';
 import Icon from './style/icon'
 
-const SettingIcon = <Ionicons name="ios-settings" color="gray" size={25}/>
+const SettingIcon = <Icon iconName="setting" color="gray" size={25}/>
 
 
 export default class App extends Component {
@@ -46,6 +45,7 @@ export default class App extends Component {
                   />
           </Scene>
           <Scene key="timeTableSetting" component={TimeTableSetting} title="TimeTableSetting" />
+          <Scene key="userMore" component={UserMore} title="UserMore" />
         </Scene>
       </Router>
     )

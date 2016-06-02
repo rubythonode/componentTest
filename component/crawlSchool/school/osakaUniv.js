@@ -19,7 +19,7 @@ var OsakaUniv = {
       return `document.getElementById("USER_ID").value="${id}";
               document.getElementById("USER_PASSWORD").value="${pw}";
               LoginSubmit("Login");`
-    }
+    },
 
     loginCondition : (navState) =>{
         if(navState.title == '個人ポータル [KOAN]'){

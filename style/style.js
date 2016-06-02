@@ -6,6 +6,9 @@ var primaryColor = '#FFA000'
 var white = 'white'
 
 styles = StyleSheet.create({
+  primaryColorBackground: {
+    backgroundColor: primaryColor
+  },
   container: {
         flex: 1,
         justifyContent: 'center',

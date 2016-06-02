@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Button from 'apsl-react-native-button'
 
@@ -22,7 +22,8 @@ export default class PageOne extends Component {
   }
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.primaryColorBackground}>
+        <View style={{height: 64}} />
         <Button onPress={Actions.pageOne} style={styles.buttonWhite} textStyle={styles.buttonWhiteText}>
           PageOne
         </Button>
@@ -44,7 +45,7 @@ export default class PageOne extends Component {
         <Button onPress={Actions.userMore} style={styles.button} textStyle={styles.buttonText}>
           userMore
         </Button>
-      </View>
+      </ScrollView>
     )
   }
 }

@@ -33,12 +33,12 @@ class TimeTable extends Component {
     }
 
     componentDidMount() {
-        store.get('user')
-          .then((user)=> {
-            console.log(user)
-            if(user.student !== null){
+        store.get('student')
+          .then((student)=> {
+            console.log(student)
+            if(student !== null){
               this.setState({
-                student: user.student
+                student: student.data
               })
             }
           })

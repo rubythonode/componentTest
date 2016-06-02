@@ -22,6 +22,7 @@ import TimeTableSetting from './component/timeTableSetting'
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import Icon from './style/icon'
 
 const SettingIcon = <Ionicons name="ios-settings" color="gray" size={25}/>
 
@@ -73,7 +74,7 @@ class TimeTableIcon extends Component {
     let color = this.props.selected ? '#FFFFFF' : '#A0A0A0'
     return (
       <View style={{flexDirection: 'column', alignItems: 'center', height: 32,}}>
-        <Entypo name="sweden" color={color} size={28} />
+        <Icon iconName="timeTable" color={color} size={28} />
         <Text style={{color: color, fontSize: 10}} >時間割</Text>
       </View>
     )
@@ -85,7 +86,7 @@ class ScheduleCalendarIcon extends Component {
     let color = this.props.selected ? '#FFFFFF' : '#A0A0A0'
     return(
       <View style={{flexDirection: 'column', alignItems: 'center', height: 32,}}>
-        <Ionicons name="ios-calendar" color={color} size={28} />
+        <Icon iconName="calendar" color={color} size={28} />
         <Text style={{color: color, fontSize: 10}} >カレンダー</Text>
       </View>
     )

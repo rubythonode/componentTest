@@ -36,14 +36,18 @@ class CrawlWebView extends Component {
             this.getScore()
         } if(message.slice(0,14) == 'OsakaUnivScore'){
             student["score"] = OsakaUniv.parseScore(message).data
-            console.log(student)
-            store.save('student', {
-              data: student
-            }).then(() => {
-              // 이동액션
-            })
+            this.saveStudent()
         }
 
+    }
+
+    saveStudent() {
+      console.log(student)
+      store.save('student', {
+        data: student
+      }).then(() => {
+        // 이동액션
+      })
     }
 
     render() {
@@ -62,7 +66,7 @@ class CrawlWebView extends Component {
     }
 
     onNavigationStateChange(navState){
-        if(navState.title == OsakaUniv.loginCondition){
+        if(OsakaUniv.loginCondition(navState)){
             //get TimeTable
             this.setState({
                 webViewUrl: OsakaUniv.timeTableUrl,
@@ -79,7 +83,7 @@ class CrawlWebView extends Component {
     controllWebView() {
         this.setState({
             webViewUrl: OsakaUniv.url,
-            injectString: OsakaUniv.injectID(this.props.ID)+OsakaUniv.injectPW(this.props.PW)+OsakaUniv.loginButton,
+            injectString: OsakaUniv.login(this.props.ID, this.props.PW),
         });
     }
     getScore() {

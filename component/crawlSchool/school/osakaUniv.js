@@ -15,8 +15,19 @@ var OsakaUniv = {
     injectPW: (pw) => {
         return 'document.getElementById("USER_PASSWORD").value="'+ 'Chaos6324' + '";'
     },
+    login: (id, pw) => {
+      return `document.getElementById("USER_ID").value="${id}";
+              document.getElementById("USER_PASSWORD").value="${pw}";
+              LoginSubmit("Login");`
+    }
 
-    loginCondition : '個人ポータル [KOAN]',
+    loginCondition : (navState) =>{
+        if(navState.title == '個人ポータル [KOAN]'){
+          return true
+        } else{
+          return false
+        }
+    },
     loginButton : 'LoginSubmit("Login");',
 
     parseScore: (html) => {

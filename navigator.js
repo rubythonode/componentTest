@@ -21,6 +21,8 @@ import ScheduleCalendar from './component/scheduleCalendar'
 import TimeTableSetting from './component/timeTableSetting'
 import UserMore from './component/userMore'
 
+import LectureDetail from './component/lectureDetail'
+
 import Icon from './style/icon'
 
 const SettingIcon = <Icon iconName="setting" color="gray" size={25}/>
@@ -37,7 +39,7 @@ export default class App extends Component {
           <Scene key="userProfileSetting" component={UserProfileSetting} title="UserProfileSetting"/>
           <Scene key="getSchool" component={GetSchool} title="GetSchool"/>
           <Scene key="tabbar" tabs={true} component={TabBar} tabBarStyle={{backgroundColor: '#FFA000'}} hideNavBar={true}>
-                <Scene key="timeTableTab" component={TimeTable} title="TimeTable"
+                <Scene key="timeTableT  ab" component={TimeTable} title="TimeTable"
                   initial={true} icon={TabIcon} rightTitle={SettingIcon} onRight={()=>{alert('setting')}}
                   />
                 <Scene key="scheduleCalendar" component={ScheduleCalendar} title="ScheduleCalendar"
@@ -46,6 +48,7 @@ export default class App extends Component {
           </Scene>
           <Scene key="timeTableSetting" component={TimeTableSetting} title="TimeTableSetting" />
           <Scene key="userMore" component={UserMore} title="UserMore" />
+          <Scene key="lectureDetail" component={LectureDetail} title="LectureDetail"  />
         </Scene>
       </Router>
     )

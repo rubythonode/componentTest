@@ -24,6 +24,9 @@ export default class PageOne extends Component {
     return (
       <ScrollView style={styles.primaryColorBackground}>
         <View style={{height: 64}} />
+          <Button onPress={Actions.lectureDetail} style={styles.button} textStyle={styles.buttonText}>
+            lectureDetail
+          </Button>
         <Button onPress={Actions.pageOne} style={styles.buttonWhite} textStyle={styles.buttonWhiteText}>
           PageOne
         </Button>
@@ -45,6 +48,7 @@ export default class PageOne extends Component {
         <Button onPress={Actions.userMore} style={styles.button} textStyle={styles.buttonText}>
           userMore
         </Button>
+
       </ScrollView>
     )
   }

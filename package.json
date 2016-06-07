@@ -17,6 +17,6 @@
     "react-native-router-flux": "^3.26.5",
     "react-native-simple-store": "^1.0.1",
     "react-native-vector-icons": "^2.0.3",
-    "react-native-webview-bridge": "git+https://github.com/wasabia/react-native-webview-bridge.git"
+    "react-native-webview-bridge": "git+https://github.com/alinz/react-native-webview-bridge.git"
   }
 }

@@ -49,6 +49,7 @@ class CrawlWebView extends Component {
 
     saveStudent() {
       console.log(student)
+      console.log(JSON.stringify(student))
       store.save('student', {
         data: student
       }).then(() => {

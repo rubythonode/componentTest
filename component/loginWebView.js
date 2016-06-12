@@ -6,6 +6,10 @@ import store from 'react-native-simple-store'
 
 import styles from './../style/style'
 
+import config from './../config/config'
+
+const baseUrl = config.baseUrl
+
 export default class PageOne extends Component {
   constructor(props) {
     super(props)

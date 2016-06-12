@@ -32,12 +32,55 @@
 
 
 ##서버
-- [ ] 회원가입 서버부분
-- [ ] 시간표 데이터 받으면 수업DB에 저장
+- [x] 회원가입 서버부분 -> /users/signin - POST
+- [x] 유저 정보 변경 -> /users/edit - POST
+- [x] 시간표 데이터 받으면 수업DB에 저장 -> /users/editTimeTable - POST
 - [ ] 강의평가 데이터 받으면 수업DB에서 알맞은 수업 찾아서 강의평가 저장
 - [ ] 타임라인 데이터 받으면 수업DB에서 알맞은 수업 찾아서 타임라인 저장
 - [ ] 수업 get 요청 받으면 수업DB에서 알맞은 수업 찾아서 수업 Data 줌.
 - [ ] 커뮤니티 글쓰기, 보기
 
+
+##api
+
+###/users
+#####/signin POST
+로그인
+```js
+{
+    uid: Int,
+    email: String,
+    provider: String,
+} =>
+{
+    // 받는 Data형식은 항상 user Object
+}
+```
+
+#####/edit POST
+자기 정보를 바꿀땐 여기서 바꿈
+```js
+{
+    uid: uid,
+    name: String,
+    nickName: String,
+} =>
+{
+  // 받는 Data형식은 user Object
+}
+```
+
+#####/editTimeTable
+post로 이러한 Data가 들어옴 -> 이 액션은 수업을 학교에서 받아올때만 실행, 나중에 시간표를 자기가 수정할 때는 실행하지 않음
+```js
+{
+    uid: uid,
+    school: String,
+    timeTable: Array
+    // timeTable을 받어서 얘가 어떤 수업을 듣는지 파악, 그 후 듣는 수업의 timeLine에
+    // 이벤트가 추가될 경우 알림.(아마?)
+} =>
+'ok'
+```
 
 여기에 혹시 해야 할게 있다면 추가.

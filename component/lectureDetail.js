@@ -6,6 +6,10 @@ import Button from 'apsl-react-native-button'
 
 import styles from './../style/style'
 
+import config from './../config/config'
+
+const baseUrl = config.baseUrl
+
 const lecture = {
   code: "080246",
   lectureName: "応用物理学",
@@ -33,9 +37,21 @@ const timeLineData = [
 
 ]
 
-export default class PageOne extends Component {
+export default class LectureDetail extends Component {
   constructor(props){
     super(props)
+  }
+
+  componentWillMount() {
+    // lectureDetail은 timeTable에서 클릭해서 들어옴 이때 Actions.action(param)을 통해서 param을 받음
+    // 그 param에 현재
+    let lectureCode = this.props.params.lectureCode
+    let school = this.props.params.school
+    fetch(baseUrl+`/${school}/${lectureCode}`)
+    .then((response) => {
+      // 이동액션
+      // 여기에 json으로 값이 잘 들어 있겠지??
+    })
   }
 
   render() {

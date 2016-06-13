@@ -14,6 +14,10 @@ import KyotoUniv from './school/kyotoUniv'
 
 var DOMParser = require('react-native-html-parser').DOMParser
 
+import config from './../../config/config'
+
+const baseUrl = config.baseUrl
+
 var student = {}
 
 class CrawlWebView extends Component {
@@ -32,13 +36,14 @@ class CrawlWebView extends Component {
 
     onBridgeMessage(message) {
         let crawlWebView = this.refs.crawlWebView;
-        console.log(message)
+        // console.log(message)
         if(message.slice(0,18) == 'OsakaUnivTimeTable'){
             student = OsakaUniv.parseTimeTable(message)
-            this.getScore()
+            // this.getScore()
+            this.saveStudent()
         } if(message.slice(0,14) == 'OsakaUnivScore'){
             student["score"] = OsakaUniv.parseScore(message).data
-            this.saveStudent()
+            // this.saveStudent()
         }
         if(message.slice(0,18) == 'KyotoUnivTimeTable'){
             student = KyotoUniv.parseTimeTable(message)
@@ -49,11 +54,33 @@ class CrawlWebView extends Component {
 
     saveStudent() {
       console.log(student)
-      console.log(JSON.stringify(student))
+
       store.save('student', {
         data: student
-      }).then(() => {
+      }).then(() => store.get('user'))
+      .then((user) => {
         // 이동액션
+        // uid, school 정보를 가져옴 -> 그걸로 sendObject 만들어서 fetch
+        if(this.props.school == '大阪大学'){
+          var school = 'osakaUniv'
+        }
+        let sendObject = {
+          uid: user.uid,
+          school: school,
+          timeTable: student.timeTable
+        }
+        console.log(sendObject)
+        fetch(baseUrl+'/users/editTimeTable', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(sendObject)
+        }).then((response) => {
+          // 이동액션
+          // 강의 평가 하는 곳으로
+        })
       })
     }
 
@@ -67,7 +94,6 @@ class CrawlWebView extends Component {
                     injectedJavaScript={this.state.injectString}
                     source={{uri: this.state.webViewUrl}}
                     onNavigationStateChange={this.onNavigationStateChange.bind(this)}
-                    style={{height: 300, width: 300}}
                 />
             </View>
         );

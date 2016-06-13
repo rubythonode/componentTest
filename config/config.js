@@ -1,5 +1,5 @@
 var config ={
-  baseUrl: 'http://schooltestpre.herokuapp.com/'
+  baseUrl: 'http://localhost:3000'
 }
 
 export default config

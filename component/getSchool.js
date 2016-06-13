@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Animated } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import Button from 'apsl-react-native-button'
@@ -18,6 +18,7 @@ export default class getSchool extends Component {
       pw: '',
       schools : ["大阪大学", "京都大学"],
       school: '',
+      viewHeight: new Animated.Value(0)
     }
   }
 
@@ -29,8 +30,25 @@ export default class getSchool extends Component {
     }
   }
   _onPressHandle() {
-          this.picker.toggle();
-      }
+        this.picker.toggle();
+        console.log(this.state.viewHeight._value)
+        if(this.state.viewHeight._value != 300){
+          Animated.spring(
+            this.state.viewHeight,
+            {toValue: 300}
+          ).start()
+        }
+        else{
+          this._slideDown()
+        }
+  }
+
+  _slideDown() {
+    Animated.spring(
+      this.state.viewHeight,
+      {toValue: 0}
+    ).start()
+  }
 
   render() {
     return (
@@ -58,8 +76,8 @@ export default class getSchool extends Component {
              style={{
                  height: 300
              }}
-             showDuration={300}
              showMask={true}
+             showDuration={300}
              pickerData={this.state.schools}//picker`s value List
              selectedValue={"大阪大学"}
              onPickerDone={(school)=>{
@@ -67,13 +85,19 @@ export default class getSchool extends Component {
                this.setState({
                  school: school
                })
-             }}//when confirm your choice
+               this._slideDown()
+             }}
+             onPickerCancel={()=>{
+               this._slideDown()
+             }}
              />
+
              <Button style={styles.buttonWhite} textStyle={styles.buttonWhiteText} onPress={()=> {
                  this.refs.CrawlWebView.controllWebView()
                }}>
                  学校からデータをとる
                </Button>
+               <Animated.View style={{height: this.state.viewHeight }}/>
           <CrawlWebView ref="CrawlWebView" ID={this.state.id} PW={this.state.pw} school={this.state.school} />
       </View>
     )

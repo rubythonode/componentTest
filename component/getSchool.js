@@ -31,7 +31,6 @@ export default class getSchool extends Component {
   }
   _onPressHandle() {
         this.picker.toggle();
-        console.log(this.state.viewHeight._value)
         if(this.state.viewHeight._value != 300){
           Animated.spring(
             this.state.viewHeight,

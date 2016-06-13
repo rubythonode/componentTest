@@ -34,8 +34,18 @@ export default class PageOne extends Component {
         }).then(() => store.get('user'))
           .then(user=> {
             console.log(user)
+            fetch(baseUrl+'/users/signin', {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(user)
+            }).then((response) => {
+              // 이동액션
+              // 유저 정보 입력하는 곳으로
+            })
           })
-
       }
   }
 

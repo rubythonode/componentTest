@@ -22,6 +22,7 @@ import TimeTableSetting from './component/timeTableSetting'
 import UserMore from './component/userMore'
 
 import LectureDetail from './component/lectureDetail'
+import LectureEval from './component/lectureEval'
 
 import Icon from './style/icon'
 
@@ -49,6 +50,7 @@ export default class App extends Component {
           <Scene key="timeTableSetting" component={TimeTableSetting} title="TimeTableSetting" />
           <Scene key="userMore" component={UserMore} title="UserMore" />
           <Scene key="lectureDetail" component={LectureDetail} title="LectureDetail"  />
+          <Scene key="lectureEval" component={LectureEval} title="LectureEval"  />
         </Scene>
       </Router>
     )

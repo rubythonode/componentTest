@@ -10,6 +10,8 @@ import CrawlWebView from './crawlSchool/crawlWebView'
 
 import Picker from 'react-native-picker';
 
+import store from 'react-native-simple-store'
+
 export default class getSchool extends Component {
   constructor(props){
     super(props)
@@ -47,6 +49,13 @@ export default class getSchool extends Component {
       this.state.viewHeight,
       {toValue: 0}
     ).start()
+  }
+
+  _getSchoolData() {
+    this.refs.CrawlWebView.controllWebView()
+    store.update('user',{
+      school: this.state.school[0]
+    })
   }
 
   render() {
@@ -91,12 +100,10 @@ export default class getSchool extends Component {
              }}
              />
 
-             <Button style={styles.buttonWhite} textStyle={styles.buttonWhiteText} onPress={()=> {
-                 this.refs.CrawlWebView.controllWebView()
-               }}>
+           <Button style={styles.buttonWhite} textStyle={styles.buttonWhiteText} onPress={this._getSchoolData.bind(this)}>
                  学校からデータをとる
-               </Button>
-               <Animated.View style={{height: this.state.viewHeight }}/>
+            </Button>
+            <Animated.View style={{height: this.state.viewHeight }}/>
           <CrawlWebView ref="CrawlWebView" ID={this.state.id} PW={this.state.pw} school={this.state.school} />
       </View>
     )

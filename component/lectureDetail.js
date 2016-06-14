@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Animated,TextInput } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import Button from 'apsl-react-native-button'
@@ -7,6 +7,20 @@ import Button from 'apsl-react-native-button'
 import styles from './../style/style'
 
 import config from './../config/config'
+import changeSchool from './../config/changeSchool'
+
+import ActionButton from 'react-native-action-button'
+
+import Dimensions from 'Dimensions'
+const {
+  width, height
+} = Dimensions.get('window')
+
+import Calendar from 'react-native-calendar'
+import moment from 'moment'
+
+const dayHeadingsArray = ["日","月","火","水","木","金","土"]
+const monthHeadingsArray = ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月",]
 
 const baseUrl = config.baseUrl
 
@@ -17,25 +31,7 @@ const lecture = {
   lectureTeacher: "山本　吉孝",
 }
 
-const timeLineData = [
-  {
-    date: '2016-3-8',
-    context: '레포트'
-  },
-  {
-    date: '2016-3-2',
-    context: '시험'
-  },
-  {
-    date: '2016-3-9',
-    context: '과제'
-  },
-  {
-    date: '2016-3-27',
-    context: '쪽지시험'
-  }
 
-]
 
 export default class LectureDetail extends Component {
   constructor(props){
@@ -45,24 +41,90 @@ export default class LectureDetail extends Component {
   componentWillMount() {
     // lectureDetail은 timeTable에서 클릭해서 들어옴 이때 Actions.action(param)을 통해서 param을 받음
     // 그 param에 현재
-    let lectureCode = this.props.params.lectureCode
-    let school = this.props.params.school
-    fetch(baseUrl+`/${school}/${lectureCode}`)
+    let lectureCode = this.props.lectureCode
+    let school = changeSchool(this.props.school)
+    this.setState({
+      eval:[],
+      timeLine: [],
+      addTimeLinePageY: new Animated.Value(height),
+      dataLoaded: false
+    })
+    fetch(baseUrl+`/lecture/${school}/${lectureCode}`)
     .then((response) => {
-      // 이동액션
-      // 여기에 json으로 값이 잘 들어 있겠지??
+      return response.json()
+    }).then((responseData) => {
+      console.log(responseData)
+      this.setState({
+        eval: responseData.evaluation,
+        timeLine: responseData.timeLine,
+        dataLoaded: true,
+      })
     })
   }
 
+  _showAddTimeLinePage() {
+    if(this.state.addTimeLinePageY._value != height){
+      this._slideDown()
+    }else {
+      Animated.timing(this.state.addTimeLinePageY,{
+        toValue: 0
+      }).start()
+    }
+  }
+
+  _slideDown(){
+    Animated.timing(this.state.addTimeLinePageY,{
+      toValue: height
+    }).start()
+  }
+
+  _addTimeLineItem(timeLineItem){
+    let timeLine = this.state.timeLine
+    timeLine.push(timeLineItem)
+    this.setState({
+      timeLine: timeLine
+    })
+
+
+    let lectureCode = this.props.lectureCode
+    let school = changeSchool(this.props.school)
+    fetch(baseUrl+`/lecture/${school}/${lectureCode}/timeLine`,{
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(timeLineItem)
+    }).then((response)=> {
+      //완료
+    })
+
+  }
+
   render() {
-    return (
-      <View style={{flex: 1, backgroundColor: 'white'}}>
-        <View style={{height: 64}} />
-        <LectureInfo />
-        <LectureAttend />
-        <LectureTimeLine />
-      </View>
-    )
+    if(this.state.dataLoaded){
+      return (
+        <View style={{flex: 1, backgroundColor: 'white'}}>
+          <View style={{height: 64}} />
+          <LectureInfo lectureRoom={this.props.lectureRoom} lectureTeacher={this.props.lectureTeacher}/>
+          <LectureAttend />
+          <LectureTimeLine timeLineItems={this.state.timeLine}/>
+          <AddTimeLinePage addTimeLinePageY={this.state.addTimeLinePageY} slideDown={this._slideDown.bind(this)} addFunc={this._addTimeLineItem.bind(this)}/>
+          <ActionButton type="tab" position="right" offsetY={30}
+            onPress={this._showAddTimeLinePage.bind(this)}
+            addFunc={this._addTimeLineItem.bind(this)}
+            />
+        </View>
+      )
+    }
+    else{
+      //나중에 로딩 페이지 만들어서 넣어야함
+      return (
+        <View style={{flex:1 , backgroundColor: 'black'}}>
+
+        </View>
+      )
+    }
   }
 }
 
@@ -86,6 +148,7 @@ class LectureTimeLine extends Component {
     super(props)
   }
   render() {
+    let timeLineData = this.props.timeLineItems
     return(
       <View>
         <View style={{backgroundColor: '#95a5a6'}}>
@@ -121,7 +184,7 @@ class LectureInfo extends Component {
             장소 :
           </Text>
           <Text style={{fontSize: 18, fontWeight: 'bold'}}>
-            {" " + lecture.lectureRoom}
+            {" " + this.props.lectureRoom}
           </Text>
         </View>
         <View style={{flexDirection: 'row', marginLeft: 20}}>
@@ -129,7 +192,7 @@ class LectureInfo extends Component {
             교수 :
           </Text>
           <Text style={{fontSize: 18, fontWeight: 'bold'}}>
-            {" " + lecture.lectureTeacher}
+            {" " + this.props.lectureTeacher}
           </Text>
         </View>
 
@@ -172,6 +235,57 @@ class LectureAttend extends Component {
           이 수업의 예전자료
         </Button>
       </View>
+    )
+  }
+}
+
+
+class AddTimeLinePage extends Component {
+  constructor(props){
+    super(props)
+  }
+
+  componentWillMount() {
+    this.setState({
+      seletedDate: moment().format('YYYY-MM-DD'),
+    })
+  }
+
+  _addTimeLineItem() {
+    let timeLineItem ={
+      date: this.state.seletedDate,
+      context: this.state.title
+    }
+    console.log(timeLineItem)
+    this.props.slideDown()
+    this.props.addFunc(timeLineItem)
+  }
+  render() {
+    return(
+      <Animated.View style={[{transform: [{translateY: this.props.addTimeLinePageY}]},{backgroundColor: 'white', position: 'absolute', width: width, height: height, top:0}]}>
+        <View style={{height: 64}} />
+        <Calendar
+          scrollEnabled={false}
+          showControls={true}
+          dayHeadings={dayHeadingsArray}
+          monthHeadings={monthHeadingsArray}
+          prevButtonText={'先月'}
+          nextButtonText={'来月'}
+          onDateSelect={(date) => {
+            this.setState({seletedDate: moment(date).format('YYYY-MM-DD')})
+          }}
+          customStyle={{day: {fontSize: 15, textAlign: 'center'}}} // Customize any pre-defined styles
+         />
+        <TextInput
+           style={styles.textInput}
+           onChangeText={(text)=>this.setState({title: text})}
+           placeholder={'Title'}
+         />
+        <View style={{flexDirection: 'row'}}>
+          <Button>cancel</Button>
+          <Button onPress={this._addTimeLineItem.bind(this)}>save</Button>
+        </View>
+      </Animated.View>
     )
   }
 }

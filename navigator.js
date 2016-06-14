@@ -42,16 +42,18 @@ export default class App extends Component {
             <Scene key="userProfileSetting" component={UserProfileSetting} title="UserProfileSetting"/>
             <Scene key="getSchool" component={GetSchool} title="GetSchool"/>
             <Scene key="tabbar" tabs={true} component={TabBar} tabBarStyle={{backgroundColor: '#FFA000'}} hideNavBar={true}>
-                  <Scene key="timeTableT  ab" component={TimeTable} title="TimeTable"
-                    initial={true} icon={TabIcon} rightTitle={SettingIcon} onRight={()=>{alert('setting')}}
-                    />
+                  <Scene key="timeTableTab" initial={true} icon={TabIcon} title="TimeTable">
+                    <Scene key="timeTable" component={TimeTable} title="TimeTable" initial={true}
+                      rightTitle={SettingIcon} onRight={()=>{alert('setting')}}
+                      />
+                    <Scene key="lectureDetail" component={LectureDetail} title="LectureDetail"  />
+                  </Scene>
                   <Scene key="scheduleCalendar" component={ScheduleCalendar} title="ScheduleCalendar"
                     icon={TabIcon}
                     />
             </Scene>
             <Scene key="timeTableSetting" component={TimeTableSetting} title="TimeTableSetting" />
             <Scene key="userMore" component={UserMore} title="UserMore" />
-            <Scene key="lectureDetail" component={LectureDetail} title="LectureDetail"  />
             <Scene key="lectureEval" component={LectureEval} title="LectureEval"  />
           </Scene>
         </Scene>

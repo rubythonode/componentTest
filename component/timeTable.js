@@ -4,6 +4,7 @@ import {
     Text,
     StyleSheet,
     TextInput,
+    TouchableOpacity
 } from 'react-native'
 
 import store from 'react-native-simple-store'
@@ -127,18 +128,33 @@ class TimeTableCellLecture extends Component {
     constructor(props) {
         super(props)
     }
+    _clickLecture() {
+      let lecture = this.props.lecture
+      store.get('user')
+        .then((user)=> {
+          console.log(user)
+          Actions.lectureDetail({
+            school: user.school,
+            lectureCode: lecture.lectureCode,
+            lectureName: lecture.lectureName,
+            lectureRoom: lecture.lectureRoom,
+            lectureTeacher: lecture.lectureTeacher
+          })
+        })
+    }
     render() {
-        var lecture = this.props.lecture
+        let lecture = this.props.lecture
         return(
-            <View style={styles.timeTableCell}>
-                <Text style={{flex: 1, fontSize: 12, color: 'white', padding: 1}}>
-                    {lecture.lectureName}
-                </Text>
-                <Text style={{fontSize: 10, color: 'white'}}>
-                    {lecture.lectureRoom}
-                </Text>
-
-            </View>
+          <View style={styles.timeTableCell}>
+            <TouchableOpacity onPress={this._clickLecture.bind(this)}>
+              <Text style={{flex: 1, fontSize: 12, color: 'white', padding: 1}}>
+                  {lecture.lectureName}
+              </Text>
+            </TouchableOpacity>
+            <Text style={{fontSize: 10, color: 'white'}}>
+                {lecture.lectureRoom}
+            </Text>
+          </View>
         )
     }
 }

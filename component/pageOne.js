@@ -6,7 +6,6 @@ export default class PageOne extends Component {
   constructor(props){
     super(props)
   }
-  
   render() {
     return (
       <View style={{margin: 128}}>

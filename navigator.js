@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Router,
          Scene,
-         TabBar } from 'react-native-router-flux';
+         TabBar,
+         Modal } from 'react-native-router-flux';
 
 import {
         View,
@@ -33,24 +34,26 @@ export default class App extends Component {
   render() {
     return (
       <Router>
-        <Scene key="root">
-          <Scene key="componentSelector" component={ComponentSelector} title="Selector" initial={true} />
-          <Scene key="pageOne" component={PageOne} title="PageOne"/>
-          <Scene key="loginWebView" component={LoginWebView} title="LoginWebView"/>
-          <Scene key="userProfileSetting" component={UserProfileSetting} title="UserProfileSetting"/>
-          <Scene key="getSchool" component={GetSchool} title="GetSchool"/>
-          <Scene key="tabbar" tabs={true} component={TabBar} tabBarStyle={{backgroundColor: '#FFA000'}} hideNavBar={true}>
-                <Scene key="timeTableT  ab" component={TimeTable} title="TimeTable"
-                  initial={true} icon={TabIcon} rightTitle={SettingIcon} onRight={()=>{alert('setting')}}
-                  />
-                <Scene key="scheduleCalendar" component={ScheduleCalendar} title="ScheduleCalendar"
-                  icon={TabIcon}
-                  />
+        <Scene key="modal" component={Modal}>
+          <Scene key="root">
+            <Scene key="componentSelector" component={ComponentSelector} title="Selector" initial={true} />
+            <Scene key="pageOne" component={PageOne} title="PageOne"/>
+            <Scene key="loginWebView" component={LoginWebView} title="LoginWebView"/>
+            <Scene key="userProfileSetting" component={UserProfileSetting} title="UserProfileSetting"/>
+            <Scene key="getSchool" component={GetSchool} title="GetSchool"/>
+            <Scene key="tabbar" tabs={true} component={TabBar} tabBarStyle={{backgroundColor: '#FFA000'}} hideNavBar={true}>
+                  <Scene key="timeTableT  ab" component={TimeTable} title="TimeTable"
+                    initial={true} icon={TabIcon} rightTitle={SettingIcon} onRight={()=>{alert('setting')}}
+                    />
+                  <Scene key="scheduleCalendar" component={ScheduleCalendar} title="ScheduleCalendar"
+                    icon={TabIcon}
+                    />
+            </Scene>
+            <Scene key="timeTableSetting" component={TimeTableSetting} title="TimeTableSetting" />
+            <Scene key="userMore" component={UserMore} title="UserMore" />
+            <Scene key="lectureDetail" component={LectureDetail} title="LectureDetail"  />
+            <Scene key="lectureEval" component={LectureEval} title="LectureEval"  />
           </Scene>
-          <Scene key="timeTableSetting" component={TimeTableSetting} title="TimeTableSetting" />
-          <Scene key="userMore" component={UserMore} title="UserMore" />
-          <Scene key="lectureDetail" component={LectureDetail} title="LectureDetail"  />
-          <Scene key="lectureEval" component={LectureEval} title="LectureEval"  />
         </Scene>
       </Router>
     )

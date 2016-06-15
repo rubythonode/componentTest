@@ -110,7 +110,7 @@ export default class LectureDetail extends Component {
           <LectureAttend />
           <LectureTimeLine timeLineItems={this.state.timeLine}/>
           <AddTimeLinePage addTimeLinePageY={this.state.addTimeLinePageY} slideDown={this._slideDown.bind(this)} addFunc={this._addTimeLineItem.bind(this)}/>
-          <ActionButton type="tab" position="right" offsetY={30}
+          <ActionButton type="tab" position="right" offsetY={60}
             onPress={this._showAddTimeLinePage.bind(this)}
             addFunc={this._addTimeLineItem.bind(this)}
             />

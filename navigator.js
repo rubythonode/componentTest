@@ -46,7 +46,7 @@ export default class App extends Component {
                     <Scene key="timeTable" component={TimeTable} title="TimeTable" initial={true}
                       rightTitle={SettingIcon} onRight={()=>{alert('setting')}}
                       />
-                    <Scene key="lectureDetail" component={LectureDetail} title="LectureDetail"  />
+                    <Scene key="lectureDetail" component={LectureDetail}  getTitle={(childState)=>{return childState.lectureName}}/>
                   </Scene>
                   <Scene key="scheduleCalendar" component={ScheduleCalendar} title="ScheduleCalendar"
                     icon={TabIcon}

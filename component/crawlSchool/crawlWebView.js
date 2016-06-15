@@ -130,7 +130,7 @@ class CrawlWebView extends Component {
                                                     document.getElementsByName("j_password")[0].value="dusrbals1";
                                                     document.getElementsByTagName("input")[2].click();
                                 }
-                                if(document.URL == 'https://www.k.kyoto-u.ac.jp/student/la/entry/zenki?server=ganymede'){
+                                if(document.URL == 'https://www.k.kyoto-u.ac.jp/student/la/entry/zenki?server=ganymede' || document.URL == 'https://www.k.kyoto-u.ac.jp/student/la/entry/zenki'){
                                   (function () {
                                           if (WebViewBridge) {
                                               WebViewBridge.send('KyotoUnivTimeTable' + document.getElementsByTagName('body')[0].innerHTML);

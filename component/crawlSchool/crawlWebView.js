@@ -88,6 +88,7 @@ class CrawlWebView extends Component {
         return (
             <View>
                 <WebViewBridge
+                  style={{height: 300, width: 300}}
                     ref="crawlWebView"
                     onBridgeMessage={this.onBridgeMessage.bind(this)}
                     javaScriptEnabled={true}
@@ -123,29 +124,20 @@ class CrawlWebView extends Component {
         }
         if(this.props.school == '京都大学'){
             this.setState({
-                webViewUrl: KyotoUniv.url,
-                injectString: `if(document.URL == 'https://student.iimc.kyoto-u.ac.jp/')
-                                {
-                                    document.querySelector('.btn').click();
-                                }
-                                if(document.URL == 'https://authidp1.iimc.kyoto-u.ac.jp/idp/Authn/UserPassword') {
+                webViewUrl: KyotoUniv.timeTableUrl,
+                injectString: `if(document.URL == 'https://authidp1.iimc.kyoto-u.ac.jp/idp/Authn/UserPassword') {
                                     document.getElementsByName("j_username")[0].value="a0131867";
                                                     document.getElementsByName("j_password")[0].value="dusrbals1";
                                                     document.getElementsByTagName("input")[2].click();
                                 }
-                `
+                                if(document.URL == 'https://www.k.kyoto-u.ac.jp/student/la/entry/zenki?server=ganymede'){
+                                  (function () {
+                                          if (WebViewBridge) {
+                                              WebViewBridge.send('KyotoUnivTimeTable' + document.getElementsByTagName('body')[0].innerHTML);
+                                          }
+                                          }());
+                                }`
             })
-
-            setTimeout(function () {
-                this.setState({
-                    webViewUrl: KyotoUniv.timeTableUrl,
-                    injectString: `(function () {
-                            if (WebViewBridge) {
-                                WebViewBridge.send('KyotoUnivTimeTable' + document.getElementsByTagName('body')[0].innerHTML);
-                            }
-                            }());`
-                })
-            }.bind(this), 3000);
         }
 
 
